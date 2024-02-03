@@ -57,10 +57,12 @@ export function Logic() {
                                         <div className = 'flex justify-between border rounded pl-2 pb-2 pt-2 p-10 w-full'>
                                             <div className = 'w-4/5'>{name}</div>
                                             <div className = 'bg-blue-400 rounded-lg p-1 text-center'>{cost}</div>
-                                            <button>X</button>
+                                            <button key = {children.length}>X</button>
                                         </div>
                                     </div>
                     setChildren((prevChildren) => [...prevChildren, newDiv]);
+                    setName("");
+                    setCost("")
                     console.log(children);
                     }}>save</button>
                 </div>
