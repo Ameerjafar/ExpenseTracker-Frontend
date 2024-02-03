@@ -2,21 +2,23 @@ import { useEffect, useState } from "react"
 
 export function Logic() {
     const [children, setChildren] = useState([]);
-    const [name, setName] = useState(0);
+    const [name, setName] = useState("");
     const [cost, setCost] = useState("0");
-    const [budget, setBudget] = useState("1000");
-    const [spentSoFar, setSpentSoFor] = useState(0);
+    const [budget, setBudget] = useState('1000');
     const [remaining, setRemaining] = useState(budget);
+    const [spentSoFar, setSpentSoFor] = useState('0');
     useEffect(() => {
-        const spent = () => {
-            setSpentSoFor(String(parseInt(cost) + parseInt(spentSoFar)));
-        }
-        const remain = () => {
-            setRemaining(String(parseInt(budget) - parseInt(spentSoFar)));
-        }
-        spent();
-        remain();
+        setSpentSoFor(parseInt(spentSoFar) + parseInt(cost));
+        setRemaining(parseInt(remaining) - parseInt(cost));
     }, [children]);
+    const deleteExpanse = (id, cost) => {  
+        const newOne = children.filter((div) => {
+            return div.key !== id 
+        });
+        setChildren(newOne);
+        setRemaining(parseInt(remaining) + parseInt(cost));
+        setSpentSoFor(parseInt(spentSoFar) - parseInt(cost));
+    }
     return (
         <div className = 'h-screen'>
             <h1 className = "text-3xl font-bold p-10">
@@ -45,7 +47,7 @@ export function Logic() {
             <div className = 'grid grid-cols-3 gap-3 pl-10'>
                 <input onChange={(events) => {
                     setName(events.target.value);
-                }} className = 'border rounded ' type = 'text'></input>
+                }} className = 'border rounded' type = 'text'></input>
                 <input onChange = {(events) => {
                     setCost(events.target.value);
                 }} className = 'border rounded' type = 'text'></input>
@@ -57,12 +59,10 @@ export function Logic() {
                                         <div className = 'flex justify-between border rounded pl-2 pb-2 pt-2 p-10 w-full'>
                                             <div className = 'w-4/5'>{name}</div>
                                             <div className = 'bg-blue-400 rounded-lg p-1 text-center'>{cost}</div>
-                                            <button key = {children.length}>X</button>
+                                            <button onClick = {() => deleteExpanse(children.length, cost)}>X</button>
                                         </div>
                                     </div>
                     setChildren((prevChildren) => [...prevChildren, newDiv]);
-                    setName("");
-                    setCost("")
                     console.log(children);
                     }}>save</button>
                 </div>
